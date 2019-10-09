@@ -21,18 +21,18 @@
       <TextField fx:id="txtVidFile" layoutX="17.0" layoutY="23.0" prefHeight="26.0" prefWidth="514.0" promptText="Video File" />
       <TextField fx:id="txtSubFile" layoutX="17.0" layoutY="68.0" prefHeight="26.0" prefWidth="514.0" promptText="Subtitle File" />
       <TextField fx:id="txtOutPath" layoutX="17.0" layoutY="111.0" prefHeight="26.0" prefWidth="514.0" promptText="Output Path (optional)" />
-      <TextArea fx:id="txtOutLog" layoutX="17.0" layoutY="201.0" prefHeight="108.0" prefWidth="567.0" promptText="Waiting for FFmpeg console log....">
+      <TextArea fx:id="txtOutLog" layoutX="17.0" layoutY="197.0" prefHeight="119.0" prefWidth="564.0" promptText="Waiting for FFmpeg console log....">
          <font>
             <Font size="10.0" />
          </font></TextArea>
-      <Label layoutX="20.0" layoutY="176.0" text="FFmpeg: ">
+      <Label layoutX="17.0" layoutY="176.0" text="FFmpeg: ">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>
       </Label>
-      <Label fx:id="lblStatus" layoutX="89.0" layoutY="176.0" text="Not Running" />
-      <TextField fx:id="txtSiHardsubPath" layoutX="17.0" layoutY="321.0" prefHeight="26.0" prefWidth="444.0" promptText="./scripts/si_hardsub" />
-      <Button fx:id="btnSetSiHardsub" layoutX="479.0" layoutY="319.0" mnemonicParsing="false" onAction="#btnSetSiHardsubClick" prefHeight="29.0" prefWidth="107.0" text="Set" />
+      <Label fx:id="lblStatus" layoutX="86.0" layoutY="176.0" text="Not Running" />
+      <TextField fx:id="txtSiHardsubPath" layoutX="17.0" layoutY="331.0" prefHeight="26.0" prefWidth="514.0" promptText="./scripts/si_hardsub (optional)" />
       <Button fx:id="btnStop" disable="true" layoutX="324.0" layoutY="155.0" mnemonicParsing="false" onAction="#btnStopClick" prefHeight="29.0" prefWidth="125.0" text="Stop" />
+      <Button fx:id="btnSetSiHardsub" layoutX="540.0" layoutY="331.0" mnemonicParsing="false" onAction="#btnSetSiHardsubClick" text="Set" />
    </children>
 </Pane>

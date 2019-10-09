@@ -49,6 +49,7 @@ public class PrimaryController {
 	public void btnSelectSubClick(Event e) {
 		FileChooser chooser = new FileChooser();
 		chooser.setTitle("Open File");
+		chooser.setInitialDirectory(new File(outputPath));
 		File file = chooser.showOpenDialog(null);
 		if (file != null) {
 			subFile = file.getAbsolutePath();
@@ -61,6 +62,7 @@ public class PrimaryController {
 	public void btnSelectOutPathClick(Event e) {
 		DirectoryChooser directoryChooser = new DirectoryChooser();
 		directoryChooser.setTitle("Open File");
+		directoryChooser.setInitialDirectory(new File(outputPath));
 		File selectedDirectory = directoryChooser.showDialog(null);
 		if (selectedDirectory != null) {
 			outputPath = selectedDirectory.getAbsolutePath() + "/";
@@ -70,12 +72,39 @@ public class PrimaryController {
 
 	@FXML
 	public void btnStartClick(Event e) {
-
 		if (!checkInputs()) {
 			showErrorAlert("Some inputs are missing!.");
 			return;
 		}
+		
+		startFFmpeg();
+	}
 
+	@FXML
+	public void btnSetSiHardsubClick(Event e) {
+		FileChooser chooser = new FileChooser();
+		chooser.setTitle("Open File");
+		File file = chooser.showOpenDialog(null);
+		if (file != null) {
+			siHardSubPath = file.getAbsolutePath();
+			txtSiHardsubPath.setText(siHardSubPath);
+		}
+	}
+
+	@FXML
+	public void btnStopClick(Event e) {
+		try {
+			ProcessBuilder proc = new ProcessBuilder("killall", "ffmpeg");
+			proc.start();
+			btnStop.setDisable(true);
+			btnStart.setDisable(false);
+		} catch (IOException e1) {
+			e1.printStackTrace();
+			showErrorAlert(e1.toString() + "\n" + e1.getCause());
+		}
+	}
+
+	private void startFFmpeg() {
 		Thread FFMpeg = new Thread(() -> {
 			String[] arguments = new String[] { siHardSubPath, "-i", videoFile, "-s", subFile, "-o", outputPath };
 			try {
@@ -113,31 +142,7 @@ public class PrimaryController {
 
 		FFMpeg.start();
 	}
-
-	@FXML
-	public void btnSetSiHardsubClick(Event e) {
-		FileChooser chooser = new FileChooser();
-		chooser.setTitle("Open File");
-		File file = chooser.showOpenDialog(null);
-		if (file != null) {
-			siHardSubPath = file.getAbsolutePath();
-			txtSiHardsubPath.setText(siHardSubPath);
-		}
-	}
-
-	@FXML
-	public void btnStopClick(Event e) {
-		try {
-			ProcessBuilder proc = new ProcessBuilder("killall", "ffmpeg");
-			proc.start();
-			btnStop.setDisable(true);
-			btnStart.setDisable(false);
-		} catch (IOException e1) {
-			e1.printStackTrace();
-			showErrorAlert(e1.toString() + "\n" + e1.getCause());
-		}
-	}
-
+	
 	private void showErrorAlert(String text) {
 		Alert alert = new Alert(AlertType.ERROR);
 		alert.setTitle("Error!");
