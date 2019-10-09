@@ -30,7 +30,6 @@ public class PrimaryController {
 	public Button btnStop = null;
 	public Button btnStart = null;
 
-	
 	@FXML
 	public void btnSelectVideoClick(Event e) {
 		FileChooser chooser = new FileChooser();
@@ -76,7 +75,7 @@ public class PrimaryController {
 			showErrorAlert("Some inputs are missing!.");
 			return;
 		}
-		
+
 		startFFmpeg();
 	}
 
@@ -142,7 +141,7 @@ public class PrimaryController {
 
 		FFMpeg.start();
 	}
-	
+
 	private void showErrorAlert(String text) {
 		Alert alert = new Alert(AlertType.ERROR);
 		alert.setTitle("Error!");
