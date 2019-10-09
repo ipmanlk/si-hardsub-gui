@@ -7,42 +7,32 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="xyz.navinda.sihardsub.PrimaryController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="371.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="xyz.navinda.sihardsub.PrimaryController">
  <children>
-      <Button fx:id="btnStart" layoutX="456.0" layoutY="195.0" mnemonicParsing="false" onAction="#btnStartClick" prefHeight="29.0" prefWidth="125.0" text="Start" />
-      <Button fx:id="btnSelectVideo" layoutX="14.0" layoutY="21.0" mnemonicParsing="false" onAction="#btnSelectVideoClick" text="Select Video" />
-      <Button fx:id="btnSelectSub" layoutX="126.0" layoutY="21.0" mnemonicParsing="false" onAction="#btnSelectSubClick" text="Select Sub" />
-      <Button fx:id="btnSelectOutput" layoutX="473.0" layoutY="21.0" mnemonicParsing="false" onAction="#btnSelectOutPathClick" text="Select Output" />
-      <Label layoutX="19.0" layoutY="67.0" text="Video:">
+      <Button fx:id="btnStart" layoutX="456.0" layoutY="155.0" mnemonicParsing="false" onAction="#btnStartClick" prefHeight="29.0" prefWidth="125.0" text="Start" />
+      <Button fx:id="btnSelectVideo" layoutX="540.0" layoutY="23.0" mnemonicParsing="false" onAction="#btnSelectVideoClick" text="Set" />
+      <Button fx:id="btnSelectSub" layoutX="540.0" layoutY="68.0" mnemonicParsing="false" onAction="#btnSelectSubClick" text="Set" />
+      <Button fx:id="btnSelectOutput" layoutX="540.0" layoutY="111.0" mnemonicParsing="false" onAction="#btnSelectOutPathClick" text="Set" />
+      <Label layoutX="19.0" layoutY="27.0" text="Video:">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
       </Label>
-      <Label layoutX="19.0" layoutY="112.0" text="Subtitle:">
+      <TextField fx:id="txtVidFile" layoutX="17.0" layoutY="23.0" prefHeight="26.0" prefWidth="514.0" promptText="Video File" />
+      <TextField fx:id="txtSubFile" layoutX="17.0" layoutY="68.0" prefHeight="26.0" prefWidth="514.0" promptText="Subtitle File" />
+      <TextField fx:id="txtOutPath" layoutX="17.0" layoutY="111.0" prefHeight="26.0" prefWidth="514.0" promptText="Output Path (optional)" />
+      <TextArea fx:id="txtOutLog" layoutX="17.0" layoutY="201.0" prefHeight="108.0" prefWidth="567.0" promptText="Waiting for FFmpeg console log....">
          <font>
-            <Font name="System Bold" size="14.0" />
+            <Font size="10.0" />
+         </font></TextArea>
+      <Label layoutX="20.0" layoutY="176.0" text="FFmpeg: ">
+         <font>
+            <Font name="System Bold" size="13.0" />
          </font>
       </Label>
-      <Label layoutX="19.0" layoutY="155.0" text="Output Path:">
-         <font>
-            <Font name="System Bold" size="14.0" />
-         </font>
-      </Label>
-      <TextField fx:id="txtVidFile" layoutX="131.0" layoutY="63.0" prefHeight="26.0" prefWidth="450.0" />
-      <TextField fx:id="txtSubFile" layoutX="131.0" layoutY="108.0" prefHeight="26.0" prefWidth="450.0" />
-      <TextField fx:id="txtOutPath" layoutX="131.0" layoutY="151.0" prefHeight="26.0" prefWidth="450.0" />
-      <TextArea fx:id="txtOutLog" layoutX="17.0" layoutY="241.0" prefHeight="108.0" prefWidth="567.0" />
-      <Label layoutX="20.0" layoutY="216.0" text="FFmpeg: ">
-         <font>
-            <Font name="System Bold" size="14.0" />
-         </font>
-      </Label>
-      <Label fx:id="lblStatus" layoutX="131.0" layoutY="216.0" text="Not Running">
-         <font>
-            <Font name="System Bold" size="14.0" />
-         </font>
-      </Label>
-      <TextField fx:id="txtSiHardsubPath" layoutX="17.0" layoutY="361.0" prefHeight="26.0" prefWidth="444.0" promptText="si_hardsub path" />
-      <Button fx:id="btnSetSiHardsub" layoutX="479.0" layoutY="359.0" mnemonicParsing="false" onAction="#btnSetSiHardsubClick" prefHeight="29.0" prefWidth="107.0" text="Set" />
+      <Label fx:id="lblStatus" layoutX="89.0" layoutY="176.0" text="Not Running" />
+      <TextField fx:id="txtSiHardsubPath" layoutX="17.0" layoutY="321.0" prefHeight="26.0" prefWidth="444.0" promptText="./scripts/si_hardsub" />
+      <Button fx:id="btnSetSiHardsub" layoutX="479.0" layoutY="319.0" mnemonicParsing="false" onAction="#btnSetSiHardsubClick" prefHeight="29.0" prefWidth="107.0" text="Set" />
+      <Button fx:id="btnStop" disable="true" layoutX="324.0" layoutY="155.0" mnemonicParsing="false" onAction="#btnStopClick" prefHeight="29.0" prefWidth="125.0" text="Stop" />
    </children>
 </Pane>

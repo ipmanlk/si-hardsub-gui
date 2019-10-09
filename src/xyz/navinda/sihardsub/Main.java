@@ -13,7 +13,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("Primary.fxml"));
         primaryStage.setTitle("Sinhala Hardsub");
-        primaryStage.setScene(new Scene(root, 600, 404));
+        primaryStage.setScene(new Scene(root, 600, 373));
         primaryStage.show();
     }
 	
