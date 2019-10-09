@@ -13,11 +13,6 @@
       <Button fx:id="btnSelectVideo" layoutX="540.0" layoutY="23.0" mnemonicParsing="false" onAction="#btnSelectVideoClick" text="Set" />
       <Button fx:id="btnSelectSub" layoutX="540.0" layoutY="68.0" mnemonicParsing="false" onAction="#btnSelectSubClick" text="Set" />
       <Button fx:id="btnSelectOutput" layoutX="540.0" layoutY="111.0" mnemonicParsing="false" onAction="#btnSelectOutPathClick" text="Set" />
-      <Label layoutX="19.0" layoutY="27.0" text="Video:">
-         <font>
-            <Font name="System Bold" size="14.0" />
-         </font>
-      </Label>
       <TextField fx:id="txtVidFile" layoutX="17.0" layoutY="23.0" prefHeight="26.0" prefWidth="514.0" promptText="Video File" />
       <TextField fx:id="txtSubFile" layoutX="17.0" layoutY="68.0" prefHeight="26.0" prefWidth="514.0" promptText="Subtitle File" />
       <TextField fx:id="txtOutPath" layoutX="17.0" layoutY="111.0" prefHeight="26.0" prefWidth="514.0" promptText="Output Path (optional)" />
