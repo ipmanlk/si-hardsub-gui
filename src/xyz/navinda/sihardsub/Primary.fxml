@@ -21,17 +21,24 @@
          <font>
             <Font size="10.0" />
          </font></TextArea>
-      <Label layoutX="17.0" layoutY="346.0" text="FFmpeg: ">
+      <Label layoutX="17.0" layoutY="357.0" text="FFmpeg: ">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>
       </Label>
-      <Label fx:id="lblStatus" layoutX="86.0" layoutY="346.0" text="Not Running" />
+      <Label fx:id="lblStatus" layoutX="86.0" layoutY="357.0" text="Not Running" />
       <TextField fx:id="txtSiHardsubPath" layoutX="17.0" layoutY="461.0" prefHeight="26.0" prefWidth="514.0" promptText="./scripts/si_hardsub (optional)" />
       <Button fx:id="btnStop" disable="true" layoutX="323.0" layoutY="340.0" mnemonicParsing="false" onAction="#btnStopClick" prefHeight="29.0" prefWidth="125.0" text="Stop" />
       <Button fx:id="btnSetSiHardsub" layoutX="540.0" layoutY="461.0" mnemonicParsing="false" onAction="#btnSetSiHardsubClick" text="Set" />
-      <ListView fx:id="listQueue" layoutX="15.0" layoutY="199.0" prefHeight="126.0" prefWidth="564.0" />
+      <ListView fx:id="listQueue" layoutX="15.0" layoutY="191.0" prefHeight="87.0" prefWidth="564.0" />
       <Button fx:id="btnAddToQueue" layoutX="17.0" layoutY="155.0" mnemonicParsing="false" onAction="#btnAddToQueueClick" prefHeight="26.0" prefWidth="278.0" text="Add To Queue" />
       <Button fx:id="btnRemoveQueue" layoutX="300.0" layoutY="155.0" mnemonicParsing="false" onAction="#btnRemoveFromQueueClick" prefHeight="26.0" prefWidth="278.0" text="Remove From Queue" />
+      <Label layoutX="17.0" layoutY="334.0" text="Queue:">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblQueue" layoutX="86.0" layoutY="334.0" text="Not Running" />
+      <ListView fx:id="listCompleted" layoutX="15.0" layoutY="286.0" prefHeight="39.0" prefWidth="564.0" />
    </children>
 </Pane>

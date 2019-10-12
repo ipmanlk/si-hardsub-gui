@@ -28,16 +28,21 @@ public class PrimaryController {
 	@FXML private TextField txtSiHardsubPath = null;
 	@FXML private TextArea txtOutLog = null;
 	@FXML private Label lblStatus = null;
+	@FXML private Label lblQueue = null;
 	@FXML private Button btnStop = null;
 	@FXML private Button btnStart = null;
 	@FXML private ListView<String> listQueue = null;
-	private ObservableList<String> queue =FXCollections.observableArrayList ();
+	@FXML private ListView<String> listCompleted = null;
+
 	private String videoFile, subFile, outputPath = null;
 	private String siHardSubPath = Paths.get(".").toAbsolutePath().normalize().toString() + "/scripts/si_hardsub";
-	
+	private ObservableList<String> queue =FXCollections.observableArrayList ();
+	private ObservableList<String> completed =FXCollections.observableArrayList ();
+
 	@FXML
 	public void initialize() {
 		listQueue.setItems(queue);
+		listCompleted.setItems(completed);
 	}
 	
 	@FXML
@@ -52,7 +57,6 @@ public class PrimaryController {
 			outputPath = file.getParent() + "/";
 			txtOutPath.setText(outputPath);
 		}
-		
 	}
 
 	@FXML
@@ -83,14 +87,8 @@ public class PrimaryController {
 	@FXML
 	public void btnStartClick(Event e) {
 		if (queue.size() > 0) {
-			String queueItem[] = queue.get(0).split(";");
-			videoFile = queueItem[0];
-			subFile = queueItem[1];
-			outputPath = queueItem[2];
-			queue.remove(0);
-			startFFmpeg();
+			startEncoding();
 		}
-		
 	}
 
 	@FXML
@@ -136,6 +134,15 @@ public class PrimaryController {
 		}
 	}
 
+	private void startEncoding() {
+		String queueItem[] = queue.get(0).split(";");
+		videoFile = queueItem[0];
+		subFile = queueItem[1];
+		outputPath = queueItem[2];
+		lblQueue.setText("Left " + queue.size() + " from " + (queue.size() + completed.size()));
+		startFFmpeg();
+	}
+	
 	private void startFFmpeg() {
 		Thread FFMpeg = new Thread(() -> {
 			String[] arguments = new String[] { siHardSubPath, "-i", videoFile, "-s", subFile, "-o", outputPath };
@@ -168,6 +175,9 @@ public class PrimaryController {
 					lblStatus.setText("Stopped");
 					lblStatus.setTextFill(Color.web("#0000FF"));
 					btnStart.setDisable(false);
+					btnStop.setDisable(true);
+					completed.add(queue.get(0));
+					queue.remove(0);
 					checkQueue();
 				});
 			}
@@ -178,12 +188,9 @@ public class PrimaryController {
 
 	private void checkQueue() {
 		if (queue.size() > 0) {
-			String queueItem[] = queue.get(0).split(";");
-			videoFile = queueItem[0];
-			subFile = queueItem[1];
-			outputPath = queueItem[2];
-			queue.remove(0);
-			startFFmpeg();
+			startEncoding();
+		} else {
+			lblQueue.setText("Completed");
 		}
 	}
 	
