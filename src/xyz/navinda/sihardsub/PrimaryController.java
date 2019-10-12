@@ -12,6 +12,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
@@ -33,6 +34,8 @@ public class PrimaryController {
 	@FXML private Button btnStart = null;
 	@FXML private ListView<String> listQueue = null;
 	@FXML private ListView<String> listCompleted = null;
+	@FXML private CheckBox chkGenOutPath = null;
+
 
 	private String videoFile, subFile, outputPath = null;
 	private String siHardSubPath = Paths.get(".").toAbsolutePath().normalize().toString() + "/scripts/si_hardsub";
@@ -54,8 +57,11 @@ public class PrimaryController {
 		if (file != null) {
 			videoFile = file.getAbsolutePath();
 			txtVidFile.setText(videoFile);
-			outputPath = file.getParent() + "/";
-			txtOutPath.setText(outputPath);
+			// check if path gen checkbox is marked
+			if (chkGenOutPath.isSelected()) {
+				outputPath = file.getParent() + "/";
+				txtOutPath.setText(outputPath);
+			}
 		}
 	}
 
@@ -107,6 +113,7 @@ public class PrimaryController {
 	@FXML
 	public void btnStopClick(Event e) {
 		try {
+			// kill ffmpeg process
 			ProcessBuilder proc = new ProcessBuilder("killall", "ffmpeg");
 			proc.start();
 			btnStop.setDisable(true);
@@ -123,6 +130,7 @@ public class PrimaryController {
 			showErrorAlert("Some inputs are missing!.");
 			return;
 		}
+		// add inputs to the queue
 		queue.add(videoFile + ";" + subFile + ";" + outputPath);
 	}
 	
@@ -131,17 +139,21 @@ public class PrimaryController {
 		if (queue.size() > 0) {
 			final int selectedIdx = listQueue.getSelectionModel().getSelectedIndex();
 			if (selectedIdx >= 0) {
+				//remove selected index from queue
 				queue.remove(selectedIdx);
 			}
 		}
 	}
 
 	private void startEncoding() {
+		// split queue item and assign values to global vars
 		String queueItem[] = queue.get(0).split(";");
 		videoFile = queueItem[0];
 		subFile = queueItem[1];
 		outputPath = queueItem[2];
+		// update queue label
 		lblQueue.setText("Left " + queue.size() + " from " + (queue.size() + completed.size()));
+		
 		startFFmpeg();
 	}
 	
@@ -149,18 +161,23 @@ public class PrimaryController {
 		Thread FFMpeg = new Thread(() -> {
 			String[] arguments = new String[] { siHardSubPath, "-i", videoFile, "-s", subFile, "-o", outputPath };
 			try {
+				// update relevant fx controls
 				Platform.runLater(() -> {
 					lblStatus.setText("Running");
 					lblStatus.setTextFill(Color.web("#FF0000"));
 					btnStop.setDisable(false);
 					btnStart.setDisable(true);
 				});
+				
+				// start ffmpeg process
 				Process proc = new ProcessBuilder(arguments).redirectErrorStream(true).start();
-
+				
+				// get output from ffmpeg process
 				BufferedReader reader = new BufferedReader(new InputStreamReader(proc.getInputStream()));
 
 				String line = "";
-
+				
+				// append to ffmpeg log texArea
 				while ((line = reader.readLine()) != null) {
 					final String ln = line;
 					Platform.runLater(() -> txtOutLog.appendText(ln + "\n"));
@@ -173,6 +190,7 @@ public class PrimaryController {
 					btnStart.setDisable(false);
 				});
 			} finally {
+				// update relevant fx controls after ffmpeg die
 				Platform.runLater(() -> {
 					lblStatus.setText("Stopped");
 					lblStatus.setTextFill(Color.web("#0000FF"));
@@ -189,6 +207,7 @@ public class PrimaryController {
 	}
 
 	private void checkQueue() {
+		// start next queue item if queue isn't empty
 		if (queue.size() > 0) {
 			startEncoding();
 		} else {
