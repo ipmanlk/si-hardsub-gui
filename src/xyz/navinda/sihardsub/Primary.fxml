@@ -80,7 +80,7 @@
             <Label fx:id="lblStatus" text="Not Running" />
          </items>
       </ToolBar>
-      <CheckBox fx:id="chkGenOutPath" layoutX="17.0" layoutY="333.0" mnemonicParsing="false" text="Gen. Output Path" />
+      <CheckBox fx:id="chkGenOutPath" layoutX="17.0" layoutY="333.0" mnemonicParsing="false" selected="true" text="Gen. Output Path" />
       <Separator layoutY="385.0" prefWidth="600.0" />
    </children>
 </Pane>
