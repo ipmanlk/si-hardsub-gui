@@ -5,12 +5,15 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
@@ -19,17 +22,24 @@ import javafx.stage.FileChooser;
 import java.nio.file.Paths;
 
 public class PrimaryController {
+	@FXML private TextField txtVidFile = null;
+	@FXML private TextField txtSubFile = null;
+	@FXML private TextField txtOutPath = null;
+	@FXML private TextField txtSiHardsubPath = null;
+	@FXML private TextArea txtOutLog = null;
+	@FXML private Label lblStatus = null;
+	@FXML private Button btnStop = null;
+	@FXML private Button btnStart = null;
+	@FXML private ListView<String> listQueue = null;
+	private ObservableList<String> queue =FXCollections.observableArrayList ();
 	private String videoFile, subFile, outputPath = null;
 	private String siHardSubPath = Paths.get(".").toAbsolutePath().normalize().toString() + "/scripts/si_hardsub";
-	public TextField txtVidFile = null;
-	public TextField txtSubFile = null;
-	public TextField txtOutPath = null;
-	public TextField txtSiHardsubPath = null;
-	public TextArea txtOutLog = null;
-	public Label lblStatus = null;
-	public Button btnStop = null;
-	public Button btnStart = null;
-
+	
+	@FXML
+	public void initialize() {
+		listQueue.setItems(queue);
+	}
+	
 	@FXML
 	public void btnSelectVideoClick(Event e) {
 		FileChooser chooser = new FileChooser();
@@ -42,6 +52,7 @@ public class PrimaryController {
 			outputPath = file.getParent() + "/";
 			txtOutPath.setText(outputPath);
 		}
+		
 	}
 
 	@FXML
@@ -75,8 +86,16 @@ public class PrimaryController {
 			showErrorAlert("Some inputs are missing!.");
 			return;
 		}
-
-		startFFmpeg();
+		
+		if (queue.size() > 0) {
+			String queueItem[] = queue.get(0).split(";");
+			videoFile = queueItem[0];
+			subFile = queueItem[1];
+			outputPath = queueItem[2];
+			queue.remove(0);
+			startFFmpeg();
+		}
+		
 	}
 
 	@FXML
@@ -100,6 +119,21 @@ public class PrimaryController {
 		} catch (IOException e1) {
 			e1.printStackTrace();
 			showErrorAlert(e1.toString() + "\n" + e1.getCause());
+		}
+	}
+	
+	@FXML
+	public void btnAddToQueueClick(Event e) {
+		queue.add(videoFile + ";" + subFile + ";" + outputPath);
+	}
+	
+	@FXML
+	public void btnRemoveQueueClick(Event e) {
+		if (queue.size() > 0) {
+			final int selectedIdx = listQueue.getSelectionModel().getSelectedIndex();
+			if (selectedIdx > 0) {
+				listQueue.getItems().remove(selectedIdx);
+			}
 		}
 	}
 
@@ -135,6 +169,7 @@ public class PrimaryController {
 					lblStatus.setText("Stopped");
 					lblStatus.setTextFill(Color.web("#0000FF"));
 					btnStart.setDisable(false);
+					checkQueue();
 				});
 			}
 		});
@@ -142,6 +177,17 @@ public class PrimaryController {
 		FFMpeg.start();
 	}
 
+	private void checkQueue() {
+		if (queue.size() > 0) {
+			String queueItem[] = queue.get(0).split(";");
+			videoFile = queueItem[0];
+			subFile = queueItem[1];
+			outputPath = queueItem[2];
+			queue.remove(0);
+			startFFmpeg();
+		}
+	}
+	
 	private void showErrorAlert(String text) {
 		Alert alert = new Alert(AlertType.ERROR);
 		alert.setTitle("Error!");
