@@ -88,6 +88,8 @@ public class PrimaryController {
 	public void btnStartClick(Event e) {
 		if (queue.size() > 0) {
 			startEncoding();
+		} else {
+			showErrorAlert("Queue is empty!.");
 		}
 	}
 
