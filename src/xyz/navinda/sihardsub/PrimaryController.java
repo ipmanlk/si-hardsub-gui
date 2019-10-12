@@ -21,6 +21,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 
 public class PrimaryController {
 	@FXML
@@ -50,6 +51,7 @@ public class PrimaryController {
 
 	private String videoFile, subFile, outputPath = null;
 	private String siHardSubPath = Paths.get(".").toAbsolutePath().normalize().toString() + "/scripts/si_hardsub";
+	private ArrayList<String> inputs = new ArrayList<String>();
 	private ObservableList<String> queue = FXCollections.observableArrayList();
 	private ObservableList<String> completed = FXCollections.observableArrayList();
 
@@ -153,7 +155,8 @@ public class PrimaryController {
 			return;
 		}
 		// add inputs to the queue
-		queue.add(videoFile + ";" + subFile + ";" + outputPath);
+		inputs.add(videoFile + ";" + subFile + ";" + outputPath);
+		queue.add(new File(videoFile).getName());
 	}
 
 	@FXML
@@ -163,16 +166,17 @@ public class PrimaryController {
 			if (selectedIdx >= 0) {
 				// remove selected index from queue
 				queue.remove(selectedIdx);
+				inputs.remove(selectedIdx);
 			}
 		}
 	}
 
 	private void startEncoding() {
-		// split queue item and assign values to global vars
-		String queueItem[] = queue.get(0).split(";");
-		videoFile = queueItem[0];
-		subFile = queueItem[1];
-		outputPath = queueItem[2];
+		// split input item and assign values to global variables
+		String paths[] = inputs.get(0).split(";");
+		videoFile = paths[0];
+		subFile = paths[1];
+		outputPath = paths[2];
 		// update queue label
 		lblQueue.setText("Left " + queue.size() + " from " + (queue.size() + completed.size()));
 
@@ -219,6 +223,7 @@ public class PrimaryController {
 					btnStart.setDisable(false);
 					btnStop.setDisable(true);
 					completed.add(queue.get(0));
+					inputs.remove(0);
 					queue.remove(0);
 					checkQueue();
 				});
