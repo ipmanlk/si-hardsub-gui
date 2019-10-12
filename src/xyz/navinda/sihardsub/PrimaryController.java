@@ -209,6 +209,7 @@ public class PrimaryController {
 	private void checkQueue() {
 		// start next queue item if queue isn't empty
 		if (queue.size() > 0) {
+			txtOutLog.setText("");
 			startEncoding();
 		} else {
 			lblQueue.setText("Completed");
