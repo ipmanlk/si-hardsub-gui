@@ -82,11 +82,6 @@ public class PrimaryController {
 
 	@FXML
 	public void btnStartClick(Event e) {
-		if (!checkInputs()) {
-			showErrorAlert("Some inputs are missing!.");
-			return;
-		}
-		
 		if (queue.size() > 0) {
 			String queueItem[] = queue.get(0).split(";");
 			videoFile = queueItem[0];
@@ -124,15 +119,19 @@ public class PrimaryController {
 	
 	@FXML
 	public void btnAddToQueueClick(Event e) {
+		if (!checkInputs()) {
+			showErrorAlert("Some inputs are missing!.");
+			return;
+		}
 		queue.add(videoFile + ";" + subFile + ";" + outputPath);
 	}
 	
 	@FXML
-	public void btnRemoveQueueClick(Event e) {
+	public void btnRemoveFromQueueClick(Event e) {
 		if (queue.size() > 0) {
 			final int selectedIdx = listQueue.getSelectionModel().getSelectedIndex();
-			if (selectedIdx > 0) {
-				listQueue.getItems().remove(selectedIdx);
+			if (selectedIdx >= 0) {
+				queue.remove(selectedIdx);
 			}
 		}
 	}
