@@ -53,7 +53,7 @@ public class PrimaryController {
 		FileChooser chooser = new FileChooser();
 		chooser.setTitle("Open File");
 		File file = chooser.showOpenDialog(null);
-
+		
 		if (file != null) {
 			videoFile = file.getAbsolutePath();
 			txtVidFile.setText(videoFile);
@@ -69,7 +69,7 @@ public class PrimaryController {
 	public void btnSelectSubClick(Event e) {
 		FileChooser chooser = new FileChooser();
 		chooser.setTitle("Open File");
-		chooser.setInitialDirectory(new File(outputPath));
+		chooser.setInitialDirectory(new File(new File(videoFile).getParent() + "/"));
 		File file = chooser.showOpenDialog(null);
 		if (file != null) {
 			subFile = file.getAbsolutePath();
