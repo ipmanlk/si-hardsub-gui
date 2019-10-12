@@ -2,32 +2,36 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="371.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="xyz.navinda.sihardsub.PrimaryController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="508.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="xyz.navinda.sihardsub.PrimaryController">
  <children>
-      <Button fx:id="btnStart" layoutX="456.0" layoutY="155.0" mnemonicParsing="false" onAction="#btnStartClick" prefHeight="29.0" prefWidth="125.0" text="Start" />
+      <Button fx:id="btnStart" layoutX="456.0" layoutY="340.0" mnemonicParsing="false" onAction="#btnStartClick" prefHeight="29.0" prefWidth="125.0" text="Start" />
       <Button fx:id="btnSelectVideo" layoutX="540.0" layoutY="23.0" mnemonicParsing="false" onAction="#btnSelectVideoClick" text="Set" />
       <Button fx:id="btnSelectSub" layoutX="540.0" layoutY="68.0" mnemonicParsing="false" onAction="#btnSelectSubClick" text="Set" />
       <Button fx:id="btnSelectOutput" layoutX="540.0" layoutY="111.0" mnemonicParsing="false" onAction="#btnSelectOutPathClick" text="Set" />
       <TextField fx:id="txtVidFile" layoutX="17.0" layoutY="23.0" prefHeight="26.0" prefWidth="514.0" promptText="Video File" />
       <TextField fx:id="txtSubFile" layoutX="17.0" layoutY="68.0" prefHeight="26.0" prefWidth="514.0" promptText="Subtitle File" />
       <TextField fx:id="txtOutPath" layoutX="17.0" layoutY="111.0" prefHeight="26.0" prefWidth="514.0" promptText="Output Path (optional)" />
-      <TextArea fx:id="txtOutLog" layoutX="17.0" layoutY="197.0" prefHeight="119.0" prefWidth="564.0" promptText="Waiting for FFmpeg console log....">
+      <TextArea fx:id="txtOutLog" layoutX="17.0" layoutY="383.0" prefHeight="63.0" prefWidth="564.0" promptText="Waiting for FFmpeg console log....">
          <font>
             <Font size="10.0" />
          </font></TextArea>
-      <Label layoutX="17.0" layoutY="176.0" text="FFmpeg: ">
+      <Label layoutX="17.0" layoutY="346.0" text="FFmpeg: ">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>
       </Label>
-      <Label fx:id="lblStatus" layoutX="86.0" layoutY="176.0" text="Not Running" />
-      <TextField fx:id="txtSiHardsubPath" layoutX="17.0" layoutY="331.0" prefHeight="26.0" prefWidth="514.0" promptText="./scripts/si_hardsub (optional)" />
-      <Button fx:id="btnStop" disable="true" layoutX="324.0" layoutY="155.0" mnemonicParsing="false" onAction="#btnStopClick" prefHeight="29.0" prefWidth="125.0" text="Stop" />
-      <Button fx:id="btnSetSiHardsub" layoutX="540.0" layoutY="331.0" mnemonicParsing="false" onAction="#btnSetSiHardsubClick" text="Set" />
+      <Label fx:id="lblStatus" layoutX="86.0" layoutY="346.0" text="Not Running" />
+      <TextField fx:id="txtSiHardsubPath" layoutX="17.0" layoutY="461.0" prefHeight="26.0" prefWidth="514.0" promptText="./scripts/si_hardsub (optional)" />
+      <Button fx:id="btnStop" disable="true" layoutX="323.0" layoutY="340.0" mnemonicParsing="false" onAction="#btnStopClick" prefHeight="29.0" prefWidth="125.0" text="Stop" />
+      <Button fx:id="btnSetSiHardsub" layoutX="540.0" layoutY="461.0" mnemonicParsing="false" onAction="#btnSetSiHardsubClick" text="Set" />
+      <ListView fx:id="listQueue" layoutX="15.0" layoutY="199.0" prefHeight="126.0" prefWidth="564.0" />
+      <Button fx:id="btnAddToQueue" layoutX="17.0" layoutY="155.0" mnemonicParsing="false" onAction="#btnAddToQueueClick" prefHeight="26.0" prefWidth="278.0" text="Add To Queue" />
+      <Button fx:id="btnRemoveQueue" layoutX="300.0" layoutY="155.0" mnemonicParsing="false" onAction="#btnRemoveQueueClick" prefHeight="26.0" prefWidth="278.0" text="Remove From Queue" />
    </children>
 </Pane>
